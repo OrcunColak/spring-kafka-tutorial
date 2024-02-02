@@ -1,4 +1,4 @@
-package com.colak.springkafkatutorial.service;
+package com.colak.springkafkatutorial.service.producer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
