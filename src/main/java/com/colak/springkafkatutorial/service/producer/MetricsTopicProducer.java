@@ -7,15 +7,14 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 /**
- * Read messages from container
- * kafka-console-consumer.sh  --topic metric1 --from-beginning --bootstrap-server localhost:9092
+ * Send messages to kafka
  */
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class MetricsTopicProducer {
 
-    @Value("${app.constant.kafka.topic-name1}")
+    @Value("${app.constant.kafka.metrics-topic-name}")
     private String topicName;
 
     private final KafkaTemplate<String, String> kafkaTemplate;

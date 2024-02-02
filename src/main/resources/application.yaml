@@ -1,5 +1,16 @@
 spring:
   kafka:
+    
+    # Create topics
+    topic:
+      name: myTopic
+      partitions: 1
+      replication-factor: 1
+      
+    listener:
+      # Same as ConcurrentKafkaListenerContainerFactory.setConcurrency()
+      concurrency: 2
+      
     consumer:
       auto-offset-reset: earliest
       bootstrap-servers: localhost:9092
@@ -8,6 +19,7 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     #      properties:
     #        spring.json.trusted.packages: com.learning.events # change this with your event packages
+    
     producer:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -16,4 +28,4 @@ spring:
 app:
   constant:
     kafka:
-      topic-name1: "metric1"
+      metrics-topic-name: "metrics"

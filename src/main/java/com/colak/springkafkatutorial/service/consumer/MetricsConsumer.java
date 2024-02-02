@@ -2,23 +2,22 @@ package com.colak.springkafkatutorial.service.consumer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 /**
- * See <a href="https://medium.com/@ravisharma911993/kafka-broadcasting-messages-without-consumer-groups-5a374fcfb7bc">...</a>
- * DynamicConsumer has a new groupId every time
+ * kafka-topics.sh --describe --topic metrics --bootstrap-server localhost:9092
+ * kafka-console-producer.sh --topic metrics --bootstrap-server localhost:9092
+ *
  */
 @Service
-@Profile("dynamic-consumer")
 @Slf4j
-public class DynamicConsumer {
+public class MetricsConsumer {
 
     @KafkaListener(topics = "${app.constant.kafka.metrics-topic-name}",
-            groupId = "consumerGroup-" + "#{T(java.util.UUID).randomUUID()}"
+            groupId = "metrics-consumer-group"
     )
     public void consumeMessage(ConsumerRecord<?, ?> consumerRecord) {
-        log.info("DynamicConsumer: {}", consumerRecord.value());
+        log.info("MetricsConsumer: {}", consumerRecord.value());
     }
 }

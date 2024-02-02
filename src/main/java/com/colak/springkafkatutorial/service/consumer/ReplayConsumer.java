@@ -2,6 +2,7 @@ package com.colak.springkafkatutorial.service.consumer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,9 @@ import org.springframework.stereotype.Service;
  * This consumer is designed to read the latest message only
  */
 @Service
+@Profile("standalone-consumer")
 @Slf4j
-public class StandaloneConsumer {
+public class ReplayConsumer {
 
     // If you don’t provide a group.id for your Kafka consumer, the consumer operates in a "simple" mode.
     // Each consumer works independently and does not coordinate with other consumers.
@@ -27,7 +29,7 @@ public class StandaloneConsumer {
     // enable.auto.offset: This will be false as we are not committing any offset.
     @KafkaListener(
             groupId = "",
-            topicPartitions = {@TopicPartition(topic = "${app.constant.kafka.topic-name1}", partitions = "0")}
+            topicPartitions = {@TopicPartition(topic = "${app.constant.kafka.metrics-topic-name}", partitions = "0")}
     )
     public void consumeMessage(ConsumerRecord<?, ?> consumerRecord) {
         log.info("StandaloneConsumer: {}", consumerRecord.value());
